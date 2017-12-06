@@ -5,6 +5,12 @@ import AddArticalContainer from './containers/AddArticalContainer'
 import ArticalListContainer from './containers/ArticalListContainer'
 
 class App extends Component {
+  constructor(props) {
+    super(props)
+  }
+  componentDidMount() {
+    this.props.onFetchArticles();
+  }
   render() {
     return (
       <div className="App">
