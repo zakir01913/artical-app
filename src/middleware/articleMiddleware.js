@@ -1,15 +1,17 @@
 import { takeEvery, put, call, all} from 'redux-saga/effects'
 import { REQUEST_ARTICLES, RECEIVE_ARTICLES, REQUEST_ARTICLES_FAILED } from '../actions'
+import { request } from 'https';
+import { read } from 'fs';
 
-let server = "";
-
+let args =  ["http://localhost:8080/"];
+let articles;
 export function * fetchArticles() {
     try {
-        //const data = yield call(fetch, server);
-        //yield put({type: RECEIVE_ARTICLES, data});
-        console.log('fetchArticles');
+        var articles = yield call(fetchData, ...args);
+        //console.log(articles);
+        yield put({type: RECEIVE_ARTICLES, articles});
     } catch(error) {
-        yield put({typd: REQUEST_ARTICLES_FAILED, error});
+        yield put({type: REQUEST_ARTICLES_FAILED, error});
     }
 }
 
@@ -21,4 +23,9 @@ export default function * rootSaga() {
     yield all([
         watchRequestArticles()
     ]);
+}
+
+export async function fetchData(...args) {
+   const response =  await fetch(...args);
+   return response.json();
 }
