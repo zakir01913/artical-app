@@ -1,6 +1,7 @@
 import {
     ADD_ARTICAL,
-    DELETE_ARTICAL
+    DELETE_ARTICAL,
+    RECEIVE_ARTICLES
 } from '../actions'
 
 const articals = (state = [], action) => {
@@ -20,6 +21,13 @@ const articals = (state = [], action) => {
         case DELETE_ARTICAL: {
             return state.filter(artical => artical.id !== action.id)
         }
+        break;
+        case RECEIVE_ARTICLES: 
+        console.log(action);
+            return [
+                ...state,
+                ...action.articles
+            ];
         default:
             return state;
     } 
